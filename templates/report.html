@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Emotion Analysis Report</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        background-color: #f2f2f2;
+        font-family: "Poppins", sans-serif;
+        padding: 40px;
+        text-align: center;
+      }
+      .report-card {
+        background-color: white;
+        border-radius: 12px;
+        padding: 35px;
+        max-width: 600px;
+        margin: 0 auto;
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+      }
+      .score-box {
+        font-size: 24px;
+        font-weight: bold;
+        margin-top: 15px;
+      }
+      .assessment {
+        margin-top: 30px;
+        font-size: 18px;
+      }
+      .btn-custom {
+        margin-top: 30px;
+        background-color: #00bfa6;
+        color: white;
+        font-weight: bold;
+        padding: 10px 25px;
+        border-radius: 30px;
+        text-decoration: none;
+        border: none;
+      }
+      .btn-custom:hover {
+        background-color: #009e88;
+        color: white;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="report-card">
+      <h2 class="mb-4">🧠 Emotion Analysis Report</h2>
+
+      <p><strong>Detected Emotion:</strong> {{ emotion }}</p>
+      <p class="score-box">MCQ Score: {{ score }}</p>
+
+      <div class="assessment">
+        <strong>Assessment:</strong><br />
+        <div style="margin-top: 10px">
+          {% if score < 4 %}
+          <span class="text-danger">
+            ❗ Possible emotional distress detected. Consider talking to
+            someone.
+          </span>
+          {% elif score < 6 %}
+          <span class="text-warning">
+            ⚠️ Mild symptoms observed. Keep monitoring your mood.
+          </span>
+          {% else %}
+          <span class="text-success">
+            ✅ You seem emotionally balanced. Keep it up!
+          </span>
+          {% endif %}
+        </div>
+      </div>
+
+      <!-- Activity Suggestion Button -->
+      <button
+        type="button"
+        class="btn btn-custom"
+        data-bs-toggle="modal"
+        data-bs-target="#activityModal"
+      >
+        Show Suggested Activities
+      </button>
+
+      <br />
+      <a href="{{ url_for('home') }}" class="btn btn-custom mt-3">Go to Home</a>
+    </div>
+
+    <!-- Suggested Activities Modal -->
+    <div
+      class="modal fade"
+      id="activityModal"
+      tabindex="-1"
+      aria-labelledby="activityModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content text-start">
+          <div class="modal-header">
+            <h5 class="modal-title" id="activityModalLabel">
+              Suggested Activities
+            </h5>
+          </div>
+          <div class="modal-body">
+            {% if score < 4 %}
+            <p>
+              <ul>
+                <li>🧘 Try a guided meditation</li>
+                <li>📝 Write in a journal</li>
+                <li>🗣️ Speak to someone you trust about your feelings</li>
+              </ul>
+            </p>
+            {% elif score < 6 %}
+            <p>
+              <ul>
+                <li>📖 Take a short walk</li>
+                <li>🎨 Do a creative activity</li>
+                <li>🌬️ Practice deep breathing to ease tension</li>
+              </ul>
+            </p>
+            {% else %}
+            <p>
+              <ul>
+                <li>🌟 Keep up your routine!</li>
+                <li>🎮 Engage in hobbies you enjoy</li>
+                <li>🤝 Try helping others</li>
+              </ul>
+            </p>
+            {% endif %}
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>
